@@ -22,8 +22,15 @@ const GameOverScreen = (props) => {
           fadeDuration={300}
         />
       </View>
-      <BodyText>The magic number was: {props.userNumber}</BodyText>
-      <BodyText>Number of rounds: {props.roundsNumber}</BodyText>
+      <View style={styles.resultContainer}>
+        <BodyText style={styles.resultText}>
+          Your phone needed{" "}
+          <Text style={styles.highlight}>{props.roundsNumber}</Text> rounds to
+          guess the number{" "}
+          <Text style={styles.highlight}>{props.userNumber}</Text>
+        </BodyText>
+      </View>
+
       <Button title="NEW GAME" onPress={props.onRestart} />
     </View>
   );
@@ -46,6 +53,14 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   image: { width: "100%", height: "100%" },
+  resultContainer: {
+    margin: 20,
+  },
+  resultText: { textAlign: "center", fontSize: 20 },
+  highlight: {
+    color: Colors.primary,
+    fontFamily: "open-sans-bold",
+  },
 });
 
 export default GameOverScreen;
