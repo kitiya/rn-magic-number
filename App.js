@@ -45,6 +45,14 @@ export default function App() {
 
   let content = <StartGameScreen onStartGame={startGameHandler} />;
 
+  content = (
+    <GameOverScreen
+      userNumber={1}
+      roundsNumber={1}
+      onRestart={configureNewGameHandler}
+    />
+  );
+
   if (userNumber && guessRounds <= 0) {
     content = (
       <GameScreen userChoice={userNumber} onGameOver={gameOverHandler} />
