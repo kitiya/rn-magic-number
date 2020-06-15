@@ -12,9 +12,14 @@ const GameOverScreen = (props) => {
       <Text style={DefaultStyles.titleText}>CONGRATULATIONS!</Text>
       <View style={styles.imageContainer}>
         <Image
-          source={require("../assets/images/game-over.png")}
+          // source={require("../assets/images/game-over.png")} // loading a local image
+          source={{
+            uri:
+              "https://cdn.pixabay.com/photo/2018/02/12/20/57/sky-3149114_960_720.jpg",
+          }}
           style={styles.image}
-          resizeMode="cover" /* default */
+          resizeMode="cover" /* 'cover' is a default value */
+          fadeDuration={300}
         />
       </View>
       <BodyText>The magic number was: {props.userNumber}</BodyText>
@@ -37,7 +42,7 @@ const styles = StyleSheet.create({
     height: 300,
     borderRadius: 150,
     borderWidth: 3,
-    borderColor: Colors.primary,
+    borderColor: Colors.dark,
     overflow: "hidden",
   },
   image: { width: "100%", height: "100%" },
