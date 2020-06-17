@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 // import { ScreenOrientation } from "expo";
-import * as ScreenOrientation from "expo-screen-orientation";
+// import * as ScreenOrientation from "expo-screen-orientation";
 
 import NumberContainer from "../components/NumberContainer";
 import Card from "../components/Card";
@@ -50,7 +50,7 @@ const GameScreen = (props) => {
   const lowerLimit = useRef(1);
   const upperLimit = useRef(100);
 
-  ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+  // ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
   useEffect(() => {
     if (currentGuess === userChoice) {
       Alert.alert(
