@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, Alert, ScrollView, FlatList, StyleSheet } from "react-native";
+import { View, Alert, FlatList, Dimensions, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import NumberContainer from "../components/NumberContainer";
@@ -37,10 +37,18 @@ const GameScreen = (props) => {
 
   useEffect(() => {
     if (currentGuess === userChoice) {
-      Alert.alert("Congratulations!", "You got the magic number right.", {
-        text: "Yeah",
-        style: "cencel",
-      });
+      Alert.alert(
+        "Congratulations!",
+        "You got the magic number right.",
+        [
+          {
+            text: "Yeah!",
+            onPress: () => console.log("OK"),
+            style: "cencel",
+          },
+        ],
+        { cancelale: true }
+      );
 
       onGameOver(pastGuesses.length);
     }
@@ -53,9 +61,18 @@ const GameScreen = (props) => {
       (direction === "lower" && currentGuess < userChoice) ||
       (direction === "greater" && currentGuess > userChoice)
     ) {
-      Alert.alert("Don't lie!", "You know that this is wrong...", [
-        { text: "sorry!", style: "cancel" },
-      ]);
+      Alert.alert(
+        "Don't lie!",
+        "You know that this is wrong...",
+        [
+          {
+            text: "Sorry!",
+            onPress: () => console.log("Don't lie!"),
+            style: "cencel",
+          },
+        ],
+        { cancelale: true }
+      );
       return;
     }
 
@@ -112,13 +129,13 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginTop: 20,
+    marginTop: Dimensions.get("window").height > 600 ? 20 : 10,
     width: 400,
     maxWidth: "90%",
   },
   renderListItemContainer: {
     marginTop: 20,
-    width: "60%",
+    width: Dimensions.get("window").width > 500 ? "60%" : "80%",
     flex: 1,
   },
   renderListItemWrapper: {
