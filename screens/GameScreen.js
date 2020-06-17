@@ -1,5 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, Alert, FlatList, Dimensions, StyleSheet } from "react-native";
+import {
+  View,
+  Alert,
+  FlatList,
+  Dimensions,
+  StyleSheet,
+  Platform,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import NumberContainer from "../components/NumberContainer";
@@ -32,6 +39,12 @@ const GameScreen = (props) => {
   const initialGuess = generateRandomBetween(1, 100, userChoice);
   const [currentGuess, setCurrentGuses] = useState(initialGuess);
   const [pastGuesses, setPastGuesses] = useState([initialGuess.toString()]);
+  const [availableDeviceHeight, setAvailaleDeviceHeight] = useState(
+    Dimensions.get("window").height
+  );
+  const [availableDeviceWidth, setAvailaleDeviceWidth] = useState(
+    Dimensions.get("window").width
+  );
   const lowerLimit = useRef(1);
   const upperLimit = useRef(100);
 
@@ -55,6 +68,19 @@ const GameScreen = (props) => {
 
     console.log(lowerLimit.current, " - ", upperLimit.current);
   }, [currentGuess, userChoice, onGameOver]);
+
+  useEffect(() => {
+    const updateLayout = () => {
+      setAvailaleDeviceHeight(Dimensions.get("window").height);
+      setAvailaleDeviceWidth(Dimensions.get("window").width);
+    };
+
+    Dimensions.addEventListener("change", updateLayout);
+
+    return () => {
+      Dimensions.removeEventListener("change", updateLayout);
+    };
+  }, [Dimensions]);
 
   const nextGuessHandler = (direction) => {
     if (
@@ -94,6 +120,54 @@ const GameScreen = (props) => {
       ...currentPastGuesses,
     ]);
   };
+
+  let listContainerStyle = styles.renderListItemContainer;
+  if (availableDeviceWidth < 350) {
+    listContainerStyle = {
+      ...listContainerStyle,
+      ...styles.renderListItemContainerSM,
+    };
+  }
+
+  let buttonContainerStyle = styles.buttonContainer;
+  if (availableDeviceHeight < 600) {
+    buttonContainerStyle = {
+      ...buttonContainerStyle,
+      ...styles.buttonContainerSM,
+    };
+  }
+
+  if (availableDeviceHeight < 500) {
+    return (
+      <View style={styles.screen}>
+        <BodyText>Opponent's Guess</BodyText>
+
+        <View style={styles.controls}>
+          <MainButton onPress={nextGuessHandler.bind(this, "lower")}>
+            <Ionicons name="md-remove" size={24} color="white" />
+          </MainButton>
+          <NumberContainer>{currentGuess}</NumberContainer>
+          <MainButton onPress={nextGuessHandler.bind(this, "greater")}>
+            <Ionicons name="md-add" size={24} color="white" />
+          </MainButton>
+        </View>
+        <View style={listContainerStyle}>
+          {/* <ScrollView contentContainerStyle={styles.renderListItemWrapper}>
+            {pastGuesses.map((guess, index) =>
+              renderListItem(guess, pastGuesses.length - index)
+            )}
+          </ScrollView> */}
+
+          <FlatList
+            contentContainerStyle={styles.renderListItemWrapper}
+            keyExtractor={(item) => item}
+            data={pastGuesses}
+            renderItem={renderListItem.bind(this, pastGuesses.length)}
+          />
+        </View>
+      </View>
+    );
+  }
   return (
     <View style={styles.screen}>
       <BodyText>Opponent's Guess</BodyText>
@@ -126,17 +200,30 @@ const GameScreen = (props) => {
 
 const styles = StyleSheet.create({
   screen: { flex: 1, padding: 10, alignItems: "center" },
-  buttonContainer: {
+  controls: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginTop: Dimensions.get("window").height > 600 ? 20 : 10,
+    alignItems: "center",
+    width: "80%",
+  },
+  buttonContainer: {
+    // marginTop: Dimensions.get("window").height > 600 ? 20 : 10,
+    marginTop: 20,
+    flexDirection: "row",
+    justifyContent: "space-around",
     width: 400,
     maxWidth: "90%",
   },
+  buttonContainerSM: {
+    marginTop: 10,
+  },
   renderListItemContainer: {
+    width: "60%",
     marginTop: 20,
-    width: Dimensions.get("window").width > 500 ? "60%" : "80%",
     flex: 1,
+  },
+  renderListItemContainerSM: {
+    width: "80%",
   },
   renderListItemWrapper: {
     // alignItems: "center",
