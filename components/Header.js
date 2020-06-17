@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Platform } from "react-native";
 import TitleText from "../components/TitleText";
 import Colors from "../constants/colors";
 
@@ -16,12 +16,34 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 90 /* 90px */,
     paddingTop: 36,
-    backgroundColor: Colors.primary,
     justifyContent: "center",
     alignItems: "center",
+
+    ...Platform.select({
+      ios: {
+        backgroundColor: Colors.light,
+        borderBottomColor: Colors.dark,
+        borderBottomWidth: 1,
+      },
+      android: {
+        backgroundColor: Colors.primary,
+        borderBottomColor: "transparent",
+        borderBottomWidth: 0,
+      },
+    }),
+  },
+  headerIOS: {
+    backgroundColor: Colors.light,
+    borderBottomColor: Colors.dark,
+    borderBottomWidth: 1,
+  },
+  headerAndroid: {
+    backgroundColor: Colors.primary,
+    borderBottomColor: "transparent",
+    borderBottomWidth: 0,
   },
   headerTitle: {
-    color: Colors.light,
+    color: Platform.OS === "android" ? Colors.light : Colors.primary,
   },
 });
 

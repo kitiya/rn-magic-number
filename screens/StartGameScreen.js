@@ -19,7 +19,7 @@ import TitleText from "../components/TitleText";
 import Colors from "../constants/colors";
 
 const StartGameScreen = (props) => {
-  const [enteredValue, setEnteredValue] = useState("");
+  const [enteredValue, setEnteredValue] = useState("1");
   const [confirmed, setConfirmedValue] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState();
   const [buttonWidth, setButtonWidth] = useState(
