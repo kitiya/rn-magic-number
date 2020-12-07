@@ -1,0 +1,6 @@
+![magic-number](https://i.imgur.com/2x2YkNQ.png)
+![magic-number](https://i.imgur.com/1TiZn8K.png)
+![magic-number](https://i.imgur.com/FnfoSxA.png)
+![magic-number](https://i.imgur.com/oCYlZEr.png)
+![magic-number](https://i.imgur.com/wzOhOXh.png)
+![magic-number](https://i.imgur.com/zjXrFqg.png)
